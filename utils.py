@@ -18,3 +18,19 @@ def print_message_box(message):
         print(f"| {line.ljust(longer)} |")
     print(f"+{horizontal_bar}+")
     print()
+
+SANITIZER = {
+    "A": ["Á", "À", "Ã", "Â", "Ä", "Ả", "ª"],
+    "E": ["É", "È", "Ẽ", "Ê", "Ë", "Ẻ"],
+    "I": ["Í", "Ì", "Ĩ", "Î", "Ï", "Ỉ"],
+    "O": ["Ó", "Ò", "Õ", "Ô", "Ö", "Ỏ", "º"],
+    "U": ["Ú", "Ù", "Ũ", "Û", "Ü", "Ủ"],
+    "C": ["Ç"],
+}
+
+def sanitize(string):
+    """Sanitiza textos… Daquele jeito"""
+    for target in SANITIZER:
+        for destin in SANITIZER[target]:
+            string = string.replace(destin, target)
+    return (string)
