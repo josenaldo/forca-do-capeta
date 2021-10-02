@@ -697,3 +697,26 @@ DEVIL_NAMES = [
     "O Mascarar de Asvenal",
     "O Sabonete de Chorume"
 ]
+
+INDIGNACAO = [
+    "O nome do Capeta não possui a letra %s.",
+    "Você já tentou %s…",
+    "Você já tentou %s… E não deu certo antes.",
+    "Já falei que não tem %s…",
+    "Qual teu problema? Não tem %s!",
+    "Enfia esse %s no teu…",
+    "Sério. Juro que não tem %s.",
+    "Se eu tiver de repetir que não tem %s teremos um problema.",
+    "Não tem %s. Não vou repetir.",
+    "…",
+    "…",
+    "Qual é o seu problema?",
+    "Formatando computador… 4%",
+    "Formatando computador… 8%",
+    "Formatando computador… 15%",
+    "Formatando computador… 16%",
+    "Formatando computador… 23%",
+    "Formatando computador… 42%",
+    "Tá, chegou pra mim.",
+    exit
+]

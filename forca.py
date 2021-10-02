@@ -1,6 +1,6 @@
 import random
 
-from forca_palavras import DEVIL_NAMES
+from forca_palavras import DEVIL_NAMES, INDIGNACAO
 from forca_enforcado import HANGED
 import utils
 
@@ -27,8 +27,10 @@ class Forca:
         self._success = False
         self._hanged = False
         self._secret = None
+        self._SECRET = None
         self._guess = None
         self._word_dashes = None
+        self._indignado = 0
         self._errors = 0
         self._misses = []
 
@@ -48,6 +50,7 @@ class Forca:
         entre as palavras são revelados na lista de traços.
         """
         self._secret = random.choice(DEVIL_NAMES).upper()
+        self._SECRET = utils.sanitize(self._secret)
         self._word_dashes = ["_"] * len(self._secret)
         self.put_guess_in_word_dashes(" ")
 
@@ -66,10 +69,14 @@ class Forca:
         guess = None
 
         while(try_again):
-            guess = input("Informe uma nova letra: ")
+            guess = input("Informe uma nova letra: ").upper()
 
-            if(len(guess) == 1 and guess.isalpha()):
-                self._guess = guess.upper()
+            if(guess in self._misses):
+                print(INDIGNACAO[self._indignado].replace("%s", guess))
+                self._indignado += 1
+            elif(len(guess) == 1 and guess.isalpha()):
+                self._indignado = 0
+                self._guess = guess
                 try_again = False
             else:
                 print("Valor incorreto. Informe uma letra.")
@@ -84,10 +91,11 @@ class Forca:
         equivalente na lista de traços.
         """
 
-        for i in range(len(self._secret)):
-            letter = self._secret[i]
-            if(letter == player_guess.upper()):
-                self._word_dashes[i] = letter
+        for i in range(len(self._SECRET)):
+            (original, test) = (self._secret[i], self._SECRET[i])
+
+            if(test == player_guess.upper()):
+                self._word_dashes[i] = original
 
     def verify_continue(self):
         """Verifica se o jogo continua
@@ -157,7 +165,8 @@ class Forca:
 
             # compara caracter com palavra secreta
             # se acertou caracter
-            if(player_move.upper() in self._secret):
+            if(player_move.upper() in self._SECRET \
+            or player_move.upper() in self._secret):
                 # exibe caracter em espaços
                 self.put_guess_in_word_dashes(player_move)
             else:
